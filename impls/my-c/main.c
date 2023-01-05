@@ -4,6 +4,9 @@
 #include <stdint.h>
 #include <string.h>
 #include <readline/readline.h>
+#include <readline/history.h>
+
+#define MAL_HISTORY_FILENAME ".mal-history"
 
 char* repl_read(void);
 char* repl_eval(char*);
@@ -11,12 +14,16 @@ void repl_print(char*);
 
 int main(int argc, char* argv[])
 {
+    using_history();
+    read_history(MAL_HISTORY_FILENAME);
+
     while (true)
     {
         char* input = NULL, *output = NULL;
 
         input = repl_read();
         if (input == NULL) break;
+        add_history(input);
 
         output = repl_eval(input);
         repl_print(output);
@@ -27,6 +34,8 @@ int main(int argc, char* argv[])
         free(output);
         output = NULL;
     }
+
+    write_history(MAL_HISTORY_FILENAME);
 
     return EXIT_SUCCESS;
 }
