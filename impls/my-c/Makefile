@@ -12,7 +12,7 @@ clean:
 mal: main.c
 	$(CC) $(CFLAGS) -o $@ $^ $(LFLAGS)
 
-step0_repl: main.c
+step0_repl: step0_repl.c
 	$(CC) $(CFLAGS) -o $@ $^ $(LFLAGS)
 
 .PHONY: clean all step0_repl
